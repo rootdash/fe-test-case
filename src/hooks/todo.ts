@@ -1,4 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { create } from 'lodash';
 import { createTodo, getTodos, moveTodo, removeTodo } from '~/services/todo';
 
 export function useGetTodos() {
@@ -16,7 +17,7 @@ export function useGetTodos() {
 export function useMoveTodo() {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate  } = useMutation({
     mutationFn: moveTodo,
     onSuccess: () => queryClient.invalidateQueries(),
   });
@@ -28,13 +29,14 @@ export function useMoveTodo() {
 export function useCreateTodo() {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: createTodo,
     onSuccess: () => queryClient.invalidateQueries(),
   });
 
   return {
     create: mutate,
+    isLoading: isPending
   };
 }
 

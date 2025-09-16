@@ -7,7 +7,7 @@ import {
 import { useGetTodos, useMoveTodo, useRemoveTodo } from '~/hooks/todo';
 import { TodoCard } from './card';
 
-export interface TodoListProps {}
+export interface TodoListProps { }
 
 export function TodoList(_: TodoListProps) {
   const { todos } = useGetTodos();

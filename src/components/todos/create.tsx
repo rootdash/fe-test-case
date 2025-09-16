@@ -10,14 +10,17 @@ export function TodoCreate() {
     resolver: zodResolver(todoSchema),
   });
 
-  const { create } = useCreateTodo();
+  const { create, isLoading } = useCreateTodo();
 
   const onSubmit = (data: TodoSchemaType) => {
     /**
      * @todo: Add the functionality to reset the form if the todo is created successfully
      */
+    create(data, {
+      onSuccess: () => { form.reset }
+    }
 
-    create(data);
+    );
   };
 
   return (
@@ -43,7 +46,8 @@ export function TodoCreate() {
               type="submit"
               className="px-3 py-2 bg-gray-200 text-sm hover:bg-gray-300 cursor-pointer active:scale-95 w-fit transition-transform duration-150 rounded-sm flex gap-x-2 items-center"
             >
-              💾 <span>Save</span>
+              {isLoading ? (<span className='animate-spin mr-2'>⌛</span>) : ('💾')}
+              <span>{isLoading ? 'Saving...' : 'Save'}</span>
             </button>
           </div>
         </form>
